@@ -20,19 +20,19 @@ const options = {
 const req = http.request(options, (res) => {
   res.setEncoding('utf8');
 
-  let response = '';
+  // const response = '';
 
   res.on('data', (chunk) => {
-    response += chunk.toString() + '\n';
+    // response += chunk.toString() + '\n';
   });
 
   res.on('end', () => {
-    console.log('Response from server:', response);
+    // console.log('Response from server:', response);
   });
 });
 
-req.on('error', (error) => {
-  console.log(error);
-});
+// req.on('error', (error) => {
+// console.log(error);
+// });
 req.write(data);
 req.end();
