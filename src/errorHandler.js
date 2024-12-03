@@ -1,21 +1,24 @@
 function errorHandler(res, textToConvert, toCase) {
+  const availableCases = ['SNAKE', 'KEBAB', 'CAMEL', 'PASCAL', 'UPPER'];
   const isTextApsent = textToConvert.length === 0;
   const isToCaseParamApsent = toCase === null;
   const isToCaseUnaccepted =
-    toCase !== 'SNAKE' &&
-    toCase !== 'KEBAB' &&
-    toCase !== 'CAMEL' &&
-    toCase !== 'PASCAL' &&
-    toCase !== 'UPPER' &&
-    !isToCaseParamApsent;
+    !availableCases.includes(toCase) && !isToCaseParamApsent;
+  const isTextApsentErrorMsg =
+    'Text to convert is required. Correct request' +
+    ' is: "/<TEXT_TO_CONVERT>?toCase=<CASE_NAME>".';
+  const isToCaseParamApsentErrorMsg =
+    '"toCase" query param is required.' +
+    ' Correct request is: "/<TEXT_TO_CONVERT>?toCase=<CASE_NAME>".';
+  const isToCaseUnacceptedErrorMsg =
+    'This case is not supported. Available' +
+    ' cases: SNAKE, KEBAB, CAMEL, PASCAL, UPPER.';
 
   const errorMsgsArray = [];
 
   if (isTextApsent) {
     const errorMessage = {
-      message:
-        'Text to convert is required. Correct request' +
-        ' is: "/<TEXT_TO_CONVERT>?toCase=<CASE_NAME>".',
+      message: isTextApsentErrorMsg,
     };
 
     errorMsgsArray.push(errorMessage);
@@ -23,9 +26,7 @@ function errorHandler(res, textToConvert, toCase) {
 
   if (isToCaseParamApsent) {
     const errorMessage = {
-      message:
-        '"toCase" query param is required.' +
-        ' Correct request is: "/<TEXT_TO_CONVERT>?toCase=<CASE_NAME>".',
+      message: isToCaseParamApsentErrorMsg,
     };
 
     errorMsgsArray.push(errorMessage);
@@ -33,9 +34,7 @@ function errorHandler(res, textToConvert, toCase) {
 
   if (isToCaseUnaccepted) {
     const errorMessage = {
-      message:
-        'This case is not supported. Available' +
-        ' cases: SNAKE, KEBAB, CAMEL, PASCAL, UPPER.',
+      message: isToCaseUnacceptedErrorMsg,
     };
 
     errorMsgsArray.push(errorMessage);
@@ -49,8 +48,6 @@ function errorHandler(res, textToConvert, toCase) {
     );
 
     return true;
-  } else {
-    return false;
   }
 }
 
